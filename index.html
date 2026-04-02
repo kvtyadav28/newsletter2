@@ -1,0 +1,576 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Go Click On – Newsletter</title>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --brand-blue: #1E66AB;
+    --brand-blue-dark: #134c82;
+    --brand-blue-light: #eaf4ff;
+    --brand-text: #123a62;
+    --brand-border: #d6e7f7;
+    --brand-muted: #5f7ea0;
+  }
+
+  body {
+    background: linear-gradient(180deg, #f4f9ff 0%, #edf5fc 100%);
+    font-family: 'IBM Plex Sans', sans-serif;
+    color: #1a1a1a;
+  }
+
+  .email-wrapper {
+    max-width: 620px;
+    margin: 0 auto;
+    background: #ffffff;
+  }
+
+  /* ── HEADER ── */
+  .header {
+    background: linear-gradient(135deg, var(--brand-blue-dark) 0%, var(--brand-blue) 100%);
+    padding: 24px 40px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .header-logo {
+    display: inline-block;
+    line-height: 0;
+  }
+
+  .header-logo img {
+    display: block;
+    width: 200px;
+    max-width: 100%;
+    height: auto;
+    background: #ffffff;
+    padding: 8px 10px;
+    border-radius: 10px;
+  }
+
+  .header-tagline {
+    font-size: 11px;
+    color: rgba(255,255,255,0.82);
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+  }
+
+  /* ── HERO ── */
+  .hero {
+    background: linear-gradient(135deg, #0f4f89 0%, var(--brand-blue) 58%, #4d94d8 100%);
+    padding: 64px 40px 56px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: -60px; right: -60px;
+    width: 260px; height: 260px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(255,255,255,0.28) 0%, transparent 70%);
+  }
+
+  .hero-eyebrow {
+    display: inline-block;
+    background: rgba(255,255,255,0.18);
+    color: #fff;
+    border: 1px solid rgba(255,255,255,0.3);
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    padding: 5px 14px;
+    border-radius: 2px;
+    margin-bottom: 22px;
+  }
+
+  .hero h1 {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 46px;
+    font-weight: 800;
+    color: #ffffff;
+    line-height: 1.05;
+    letter-spacing: -1.5px;
+    margin-bottom: 18px;
+  }
+
+  .hero h1 em {
+    font-style: normal;
+    color: #ffffff;
+    text-decoration: underline;
+    text-decoration-color: rgba(255,255,255,0.45);
+    text-underline-offset: 6px;
+  }
+
+  .hero p {
+    font-size: 16px;
+    color: rgba(255,255,255,0.88);
+    line-height: 1.65;
+    max-width: 430px;
+    margin-bottom: 34px;
+  }
+
+  .btn-primary {
+    display: inline-block;
+    background: #ffffff;
+    color: var(--brand-blue);
+    font-family: 'IBM Plex Sans', sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    padding: 15px 32px;
+    border-radius: 3px;
+    text-decoration: none;
+    letter-spacing: 0.3px;
+  }
+
+  /* ── DIVIDER STRIP ── */
+  .strip {
+    background: linear-gradient(90deg, var(--brand-blue-dark) 0%, var(--brand-blue) 100%);
+    padding: 20px 40px;
+  }
+
+  .strip p {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 18px;
+    font-weight: 700;
+    color: #ffffff;
+    text-align: center;
+    letter-spacing: -0.3px;
+  }
+
+  /* ── STATS ROW ── */
+  .stats {
+    background: #ffffff;
+    padding: 40px 40px;
+    display: flex;
+    justify-content: space-around;
+    border-bottom: 1px solid var(--brand-border);
+  }
+
+  .stat {
+    text-align: center;
+  }
+
+  .stat-num {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 32px;
+    font-weight: 800;
+    color: var(--brand-blue);
+    display: block;
+    line-height: 1;
+    margin-bottom: 4px;
+  }
+
+  .stat-label {
+    font-size: 12px;
+    color: var(--brand-muted);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+
+  /* ── SECTION ── */
+  .section {
+    padding: 50px 40px;
+  }
+
+  .section-eyebrow {
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--brand-blue);
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin-bottom: 10px;
+  }
+
+  .section h2 {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 30px;
+    font-weight: 800;
+    color: var(--brand-text);
+    line-height: 1.1;
+    letter-spacing: -0.8px;
+    margin-bottom: 16px;
+  }
+
+  .section p {
+    font-size: 15px;
+    color: #4f6781;
+    line-height: 1.7;
+    margin-bottom: 28px;
+  }
+
+  /* ── SERVICE CARDS ── */
+  .services-grid {
+    padding: 0 40px 50px;
+  }
+
+  .services-grid-title {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 22px;
+    font-weight: 800;
+    color: var(--brand-text);
+    margin-bottom: 22px;
+    letter-spacing: -0.5px;
+  }
+
+  .service-row {
+    display: flex;
+    gap: 16px;
+    margin-bottom: 16px;
+  }
+
+  .service-card {
+    flex: 1;
+    background: linear-gradient(180deg, #ffffff 0%, var(--brand-blue-light) 100%);
+    border-left: 3px solid var(--brand-blue);
+    padding: 20px 18px;
+    border-radius: 2px;
+    box-shadow: 0 10px 24px rgba(30,102,171,0.08);
+  }
+
+  .service-card-icon {
+    width: 42px;
+    height: 42px;
+    margin-bottom: 12px;
+  }
+
+  .service-card-icon img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+  }
+
+  .service-card h3 {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--brand-text);
+    margin-bottom: 6px;
+    letter-spacing: -0.2px;
+  }
+
+  .service-card p {
+    font-size: 13px;
+    color: #5d7791;
+    line-height: 1.55;
+  }
+
+  /* ── DARK FEATURE BLOCK ── */
+  .feature-block {
+    background: linear-gradient(135deg, var(--brand-blue-dark) 0%, var(--brand-blue) 100%);
+    padding: 50px 40px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .feature-block::after {
+    content: '';
+    position: absolute;
+    bottom: -40px; left: -40px;
+    width: 200px; height: 200px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(255,255,255,0.22) 0%, transparent 70%);
+  }
+
+  .feature-block .section-eyebrow {
+    color: #ffffff;
+  }
+
+  .feature-block h2 {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 30px;
+    font-weight: 800;
+    color: #ffffff;
+    line-height: 1.1;
+    letter-spacing: -0.8px;
+    margin-bottom: 16px;
+  }
+
+  .feature-block p {
+    font-size: 15px;
+    color: rgba(255,255,255,0.84);
+    line-height: 1.7;
+    margin-bottom: 28px;
+    max-width: 440px;
+  }
+
+  /* ── TESTIMONIAL ── */
+  .testimonial {
+    background: linear-gradient(135deg, #2d79c2 0%, var(--brand-blue) 100%);
+    padding: 44px 40px;
+    text-align: center;
+  }
+
+  .testimonial blockquote {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 20px;
+    font-weight: 700;
+    color: #ffffff;
+    line-height: 1.4;
+    letter-spacing: -0.3px;
+    margin-bottom: 20px;
+  }
+
+  .testimonial cite {
+    font-size: 13px;
+    color: rgba(255,255,255,0.75);
+    font-style: normal;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+  }
+
+  .testimonial cite strong {
+    color: #ffffff;
+    font-weight: 600;
+  }
+
+  /* ── CTA BLOCK ── */
+  .cta-block {
+    background: #ffffff;
+    padding: 56px 40px;
+    text-align: center;
+    border-top: 1px solid var(--brand-border);
+  }
+
+  .cta-block h2 {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 36px;
+    font-weight: 800;
+    color: var(--brand-text);
+    line-height: 1.05;
+    letter-spacing: -1px;
+    margin-bottom: 12px;
+  }
+
+  .cta-block p {
+    font-size: 15px;
+    color: #5d7791;
+    margin-bottom: 30px;
+    line-height: 1.6;
+  }
+
+  .btn-outline {
+    display: inline-block;
+    border: 2px solid var(--brand-blue);
+    color: var(--brand-blue);
+    font-family: 'IBM Plex Sans', sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    padding: 14px 30px;
+    border-radius: 3px;
+    text-decoration: none;
+    margin-left: 12px;
+  }
+
+  /* ── CONTACT ── */
+  .contact {
+    background: linear-gradient(180deg, #ffffff 0%, var(--brand-blue-light) 100%);
+    padding: 40px 40px;
+    text-align: center;
+    border-top: 1px solid var(--brand-border);
+  }
+
+  .contact p {
+    font-size: 13px;
+    color: #5d7791;
+    line-height: 1.8;
+  }
+
+  .contact a {
+    color: var(--brand-blue);
+    text-decoration: none;
+    font-weight: 500;
+  }
+
+  .contact-address {
+    font-size: 13px;
+    color: #4f6781;
+    margin-top: 10px;
+  }
+
+  /* ── FOOTER ── */
+  .footer {
+    background: linear-gradient(135deg, var(--brand-blue-dark) 0%, var(--brand-blue) 100%);
+    padding: 28px 40px;
+    text-align: center;
+  }
+
+  .footer-logo {
+    display: inline-block;
+    margin-bottom: 14px;
+  }
+
+  .footer-logo img {
+    display: block;
+    width: 180px;
+    max-width: 100%;
+    height: auto;
+    background: #ffffff;
+    padding: 8px 10px;
+    border-radius: 10px;
+    margin: 0 auto;
+  }
+
+  .footer p {
+    font-size: 11px;
+    color: rgba(255,255,255,0.78);
+    line-height: 1.9;
+  }
+
+  .footer a {
+    color: rgba(255,255,255,0.92);
+    text-decoration: none;
+  }
+
+  .footer a:hover { color: #ffffff; }
+
+  /* ── HORIZONTAL RULE ── */
+  hr.divider {
+    border: none;
+    border-top: 1px solid var(--brand-border);
+  }
+</style>
+</head>
+<body>
+
+<div class="email-wrapper">
+
+  <!-- HEADER -->
+  <div class="header">
+    <div class="header-logo">
+      <img src="assets/gco-logo.png" alt="Go Click On all IT solutions">
+    </div>
+    <div class="header-tagline">April 2026 </div>
+  </div>
+
+  <!-- HERO -->
+  <div class="hero">
+    <div class="hero-eyebrow">Tired of Blending In Online?</div>
+    <h1>We've Got a <em>Digital</em><br>Solution for You.</h1>
+    <p>From brainstorming a concept through to launch, our team takes the stress out of your digital presence. Smart, strategic solutions that strengthen your brand and turn your website into a powerful growth engine.</p>
+    <a href="https://www.goclickon.com.au/" class="btn-primary">Transform Your Business →</a>
+  </div>
+
+  <!-- RED STRIP -->
+  <div class="strip">
+    <p>Over 15 years of award-winning web design, digital marketing &amp; IT support across Australia.</p>
+  </div>
+
+  <!-- STATS -->
+  <div class="stats">
+    <div class="stat">
+      <span class="stat-num">100K+</span>
+      <span class="stat-label">Pages Completed</span>
+    </div>
+    <div class="stat">
+      <span class="stat-num">15+</span>
+      <span class="stat-label">Years Experience</span>
+    </div>
+    <div class="stat">
+      <span class="stat-num">20+</span>
+      <span class="stat-label">Industries Served</span>
+    </div>
+    <div class="stat">
+      <span class="stat-num">95%</span>
+      <span class="stat-label">Client Satisfaction</span>
+    </div>
+  </div>
+
+  <!-- INTRO SECTION -->
+  <div class="section">
+    <div class="section-eyebrow">What's New This Month</div>
+    <h2>Did You Know We Offer Full-Stack Digital Services?</h2>
+    <p>Many businesses we speak with are surprised to learn that Go Click On is a true one-stop digital partner. Whether you need a brand-new website, a smarter SEO strategy, IT support for your team, or even cyber security — we handle it all under one roof, right here in Melbourne.</p>
+    <a href="https://www.goclickon.com.au/" class="btn-primary">Browse All Services →</a>
+  </div>
+
+  <!-- SERVICES GRID -->
+  <div class="services-grid">
+    <div class="services-grid-title">See What's Possible</div>
+
+    <div class="service-row">
+      <div class="service-card">
+        <div class="service-card-icon"><img src="assets/website-design.png" alt="Web design icon"></div>
+        <h3>Web Design &amp; Development</h3>
+        <p>User-centric, SEO-friendly websites that drive engagement and convert visitors into customers.</p>
+      </div>
+      <div class="service-card">
+        <div class="service-card-icon"><img src="assets/chart-line-up.png" alt="Marketing chart icon"></div>
+        <h3>Digital Marketing &amp; SEO</h3>
+        <p>Performance-driven strategies — SEO, PPC and social media — that help you rank higher and grow faster.</p>
+      </div>
+    </div>
+
+    <div class="service-row">
+      <div class="service-card">
+        <div class="service-card-icon"><img src="assets/globe.png" alt="Graphic design icon"></div>
+        <h3>Graphic Design</h3>
+        <p>Transforming your ideas into pixel-perfect visuals that inspire and reinforce your brand identity.</p>
+      </div>
+      <div class="service-card">
+        <div class="service-card-icon"><img src="assets/lock.png" alt="Security lock icon"></div>
+        <h3>IT Support &amp; Cyber Security</h3>
+        <p>Comprehensive IT solutions and cyber security services that keep your technology — and data — safe.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- DARK FEATURE BLOCK -->
+  <div class="feature-block">
+    <div class="section-eyebrow">Award-Winning Agency</div>
+    <h2>Want to Talk to<br>a Local Expert?</h2>
+    <p>Our Melbourne-based team is just a call away. We work with businesses across Australia — from startups to established brands — to craft digital strategies that truly cut through.</p>
+    <a href="https://calendly.com/schedule-free-call/30min" class="btn-primary">Book a Free Call →</a>
+  </div>
+
+  <!-- TESTIMONIAL -->
+  <div class="testimonial">
+    <blockquote>"Every step of the process was efficient and top quality. They went the extra mile and the results speak for themselves. Great service!"</blockquote>
+    <cite>— <strong>Clearview Financials</strong>, Melbourne</cite>
+  </div>
+
+  <!-- CTA BLOCK -->
+  <div class="cta-block">
+    <h2>Don't Just Take<br>It From Us.</h2>
+    <p>We've earned 5-star Google reviews, multiple industry awards, and — most importantly — the trust of businesses across 20+ industries. See what's possible for your business.</p>
+    <a href="https://www.goclickon.com.au/" class="btn-primary">Explore Our Work →</a>
+    <a href="https://www.goclickon.com.au/contact/" class="btn-outline">Get in Touch</a>
+  </div>
+
+  <!-- CONTACT -->
+  <div class="contact">
+    <p>
+      <strong>Go Click On</strong><br>
+      Level 1, 454 Collins Street, Melbourne VIC 3000<br>
+      <a href="tel:1300442648">1300 442 648 (4 GCO IT)</a> &nbsp;|&nbsp; <a href="mailto:info@goclickon.com.au">info@goclickon.com.au</a>
+    </p>
+    <p style="margin-top:14px; font-size:12px; color:#aaa;">
+      This email was sent because you opted in to receive updates from Go Click On.
+      If you no longer wish to receive these emails, you can <a href="#" style="color:#aaa;">unsubscribe</a> at any time.
+    </p>
+  </div>
+
+  <!-- FOOTER -->
+  <div class="footer">
+    <div class="footer-logo">
+      <img src="assets/gco-logo.png" alt="Go Click On all IT solutions">
+    </div>
+    <p>
+      © 2026 Go Click On. All Rights Reserved. ABN: 78 144 996 298<br>
+      <a href="https://www.goclickon.com.au/privacy-policy/">Privacy Policy</a> &nbsp;·&nbsp;
+      <a href="https://www.goclickon.com.au/terms-conditions/">Terms &amp; Conditions</a> &nbsp;·&nbsp;
+      <a href="https://www.goclickon.com.au/contact/">Contact Us</a>
+    </p>
+  </div>
+
+</div><!-- /email-wrapper -->
+</body>
+</html>
